@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Import images
 import singleBall from "../src/assets/single ball.jpg"
@@ -26,36 +26,53 @@ function App() {
     }, 1000);
   };
 
+  // Scroll to top when page changes
+  const changePage = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Navbar Component
   const Navbar = () => (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top" style={{ backgroundColor: '#2c5530' }}>
       <div className="container">
         <button 
           className="navbar-brand btn btn-link text-white fw-bold fs-3 text-decoration-none p-0 border-0"
-          onClick={() => setCurrentPage('home')}
+          onClick={() => changePage('home')}
         >
-          🏓 PicklePro India
+           PicklePro India
         </button>
         
-        <div className="navbar-nav ms-auto d-flex flex-row gap-3">
-          <button 
-            className={`btn btn-link text-white text-decoration-none fw-semibold ${currentPage === 'home' ? 'active' : ''}`}
-            onClick={() => setCurrentPage('home')}
-          >
-            Home
-          </button>
-          <button 
-            className={`btn btn-link text-white text-decoration-none fw-semibold ${currentPage === 'products' ? 'active' : ''}`}
-            onClick={() => setCurrentPage('products')}
-          >
-            Products
-          </button>
-          <button 
-            className={`btn btn-link text-white text-decoration-none fw-semibold ${currentPage === 'contact' ? 'active' : ''}`}
-            onClick={() => setCurrentPage('contact')}
-          >
-            Contact Us
-          </button>
+        <button 
+          className="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarNav"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <div className="navbar-nav ms-auto">
+            <button 
+              className={`btn btn-link text-white text-decoration-none fw-semibold mx-2 ${currentPage === 'home' ? 'active' : ''}`}
+              onClick={() => changePage('home')}
+            >
+              Home
+            </button>
+            <button 
+              className={`btn btn-link text-white text-decoration-none fw-semibold mx-2 ${currentPage === 'products' ? 'active' : ''}`}
+              onClick={() => changePage('products')}
+            >
+              Products
+            </button>
+            <button 
+              className={`btn btn-link text-white text-decoration-none fw-semibold mx-2 ${currentPage === 'contact' ? 'active' : ''}`}
+              onClick={() => changePage('contact')}
+            >
+              Contact Us
+            </button>
+          </div>
         </div>
       </div>
     </nav>
@@ -79,10 +96,10 @@ function App() {
         <div className="container text-center">
           <h1 className="display-4 fw-bold mb-4">Welcome to PicklePro India</h1>
           <p className="lead fs-4 mb-4">India's Premier Pickleball Equipment Manufacturer</p>
-          <p className="fs-5 mb-5">Experience the fastest-growing sport with premium quality balls designed for Indian courts</p>
+          <p className="fs-5 mb-5">Experience the fastest-growing sport with premium quality balls designed & made in India for India</p>
           <button 
             className="btn btn-light btn-lg px-5 py-3 fw-semibold"
-            onClick={() => setCurrentPage('products')}
+            onClick={() => changePage('products')}
           >
             Shop Now
           </button>
@@ -93,20 +110,35 @@ function App() {
         {/* What is Pickleball Section */}
         <div className="row align-items-center mb-5">
           <div className="col-lg-6">
-            <h2 className="display-6 fw-bold text-success mb-4">What is Pickleball?</h2>
-            <p className="fs-5 mb-3">
+            <h2 className="display-6 fw-bold text-success mb-4 text-center text-lg-start">What is Pickleball?</h2>
+            <p className="fs-5 mb-3 text-center text-lg-start">
               Pickleball is a sport derived from tennis, badminton, and ping-pong, combining the best elements of all three sports.
             </p>
-            <p className="mb-3">
-              Invented in 1965 by Joel Pritchard, Bill Bell, and Barney McCallum at Bainbridge Island, Washington, 
-              it has become one of the fastest-growing sports in America and is now gaining massive popularity in India.
-            </p>
-            <p className="mb-4">
-              The game is played with paddles and a perforated plastic ball on a court similar to badminton, 
-              making it accessible for players of all ages and skill levels.
-            </p>
           </div>
-          <div className="col-lg-6">
+          <div className="col-lg-6 order-lg-2 order-1 mb-4 mb-lg-0">
+            {/* Made in India Section - Mobile First */}
+            <div className="d-lg-none mb-5">
+              <h2 className="display-6 fw-bold mb-4 text-center" style={{ color: '#ff6b35' }}>
+                🇮🇳 Made in India for India
+              </h2>
+              <p className="fs-5 mb-3 text-center">
+                Your only homegrown sports equipment manufacturer specializing in pickleball.
+              </p>
+              <p className="mb-3 text-center">
+                We understand the unique playing conditions in India - from humid coastal regions to dry northern plains. 
+                Our balls are specially designed and tested for Indian weather conditions.
+              </p>
+              <div className="bg-warning bg-opacity-10 rounded p-4 mb-4">
+                <h5 className="fw-bold text-warning-emphasis text-center">Why Choose PicklePro India?</h5>
+                <ul className="list-unstyled mb-0 text-center">
+                  <li className="mb-2">✅ Designed for Indian climate conditions</li>
+                  <li className="mb-2">✅ Premium quality at affordable prices</li>
+                  <li className="mb-2">✅ Supporting local manufacturing</li>
+                  <li className="mb-2">✅ Fast delivery across India</li>
+                </ul>
+              </div>
+            </div>
+            
             <div className="bg-light rounded p-4 text-center">
               <h3 className="text-success mb-3">Quick Facts</h3>
               <div className="row">
@@ -143,8 +175,8 @@ function App() {
           </div>
         </div>
 
-        {/* Made in India Section */}
-        <div className="row align-items-center">
+        {/* Made in India Section - Desktop Only */}
+        <div className="row align-items-center d-none d-lg-flex">
           <div className="col-lg-6 order-lg-2">
             <h2 className="display-6 fw-bold mb-4" style={{ color: '#ff6b35' }}>
               🇮🇳 Made in India for India
@@ -209,42 +241,42 @@ function App() {
       { 
         title: 'Single Ball', 
         qty: 1, 
-        price: '₹100',
-        originalPrice: '₹120',
+        price: '₹140',
+        originalPrice: '₹150',
         description: 'Perfect for beginners or replacing a lost ball',
         features: ['Indoor/Outdoor use', 'Tournament grade', '40-hole design'],
         badge: 'Starter',
-        image: singleBall // Single ball image
+        image: singleBall
       },
       { 
         title: '6-Pack Balls', 
         qty: 6, 
-        price: '₹592',
-        originalPrice: '₹720',
+        price: '₹720',
+        originalPrice: '₹840',
         description: 'Most popular choice for regular players and clubs',
         features: ['Best value pack', 'Club favorite', 'Bulk discount'],
         badge: 'Popular',
-        image: sixBall // Six balls image
+        image: sixBall
       },
       { 
         title: 'Bulk 50-Pack', 
         qty: 50, 
-        price: '₹4,750',
-        originalPrice: '₹6,000',
+        price: '₹5000',
+        originalPrice: '₹7,000',
         description: 'Perfect for tournaments and training academies',
         features: ['Tournament pack', 'Academy choice', '21% savings'],
         badge: 'Tournament',
-        image: fiftyBall // Fifty balls image
+        image: fiftyBall
       },
       { 
         title: 'Bulk 100-Pack', 
         qty: 100, 
-        price: '₹9,000',
-        originalPrice: '₹12,000',
+        price: '₹8,500',
+        originalPrice: '₹14,000',
         description: 'Ultimate bulk pack for serious organizations',
         features: ['Maximum savings', 'Organization pack', '25% discount'],
         badge: 'Wholesale',
-        image: hundredBall // Hundred balls image
+        image: hundredBall
       }
     ];
 
@@ -278,27 +310,20 @@ function App() {
                 </div>
 
                 {/* Product Image */}
-                <div className="card-img-top d-flex align-items-center justify-content-center p-3" 
-                     style={{ 
-                       height: '200px',
-                       background: `linear-gradient(135deg, ${
-                         index % 4 === 0 ? '#e3f2fd, #1976d2' :
-                         index % 4 === 1 ? '#f3e5f5, #7b1fa2' :
-                         index % 4 === 2 ? '#fff3e0, #f57c00' : '#e8f5e8, #388e3c'
-                       })`
-                     }}>
+                <div className="card-img-top d-flex align-items-center justify-content-center p-3">
                   <div className="text-center">
                     <img 
                       src={product.image} 
                       alt={product.title}
+                      className="img-fluid"
                       style={{
                         maxHeight: '150px',
-                        maxWidth: '150px',
+                        maxWidth: '100%',
                         objectFit: 'contain',
                         borderRadius: '8px'
                       }}
                     />
-                    <p className="mb-0 fw-bold text-white mt-2">{product.qty} Ball{product.qty > 1 ? 's' : ''}</p>
+                    <p className="mb-0 fw-bold mt-2">{product.qty} Ball{product.qty > 1 ? 's' : ''}</p>
                   </div>
                 </div>
 
@@ -342,25 +367,25 @@ function App() {
             <div className="bg-light rounded p-4">
               <h4 className="text-center mb-4">🏆 Why Our Balls Are Different</h4>
               <div className="row text-center">
-                <div className="col-md-3 mb-3">
+                <div className="col-md-3 col-sm-6 mb-3">
                   <div className="p-3">
                     <h5 className="text-primary">🌡️ Climate Tested</h5>
                     <p className="small mb-0">Tested in temperatures from 15°C to 45°C across India</p>
                   </div>
                 </div>
-                <div className="col-md-3 mb-3">
+                <div className="col-md-3 col-sm-6 mb-3">
                   <div className="p-3">
                     <h5 className="text-success">✅ Tournament Grade</h5>
                     <p className="small mb-0">Approved for official tournaments and competitions</p>
                   </div>
                 </div>
-                <div className="col-md-3 mb-3">
+                <div className="col-md-3 col-sm-6 mb-3">
                   <div className="p-3">
                     <h5 className="text-warning">🔄 Consistent Bounce</h5>
                     <p className="small mb-0">Engineered for predictable ball behavior every time</p>
                   </div>
                 </div>
-                <div className="col-md-3 mb-3">
+                <div className="col-md-3 col-sm-6 mb-3">
                   <div className="p-3">
                     <h5 className="text-info">💪 Durable Design</h5>
                     <p className="small mb-0">Reinforced construction for extended play sessions</p>
@@ -385,7 +410,7 @@ function App() {
           </div>
           
           <div className="card shadow border-0">
-            <div className="card-body p-5">
+            <div className="card-body p-4 p-md-5">
               <div>
                 <div className="row">
                   <div className="col-md-6 mb-4">
@@ -454,26 +479,26 @@ function App() {
           </div>
 
           {/* Contact Info */}
-          <div className="row mt-5">
-            <div className="col-md-4 text-center mb-4">
-              <div className="bg-light rounded p-4">
-                <h4 className="text-primary">📞 Call Us</h4>
-                <p className="mb-0">+91-7891576498</p>
-                <small className="text-muted">Mon-Sat, 9 AM - 6 PM</small>
+          <div className="row mt-5 g-4">
+            <div className="col-md-4">
+              <div className="bg-light rounded p-4 text-center h-100">
+                <h4 className="text-primary mb-3">📞 Call Us</h4>
+                <p className="mb-1 fw-semibold">+91-7891576498</p>
+                <small className="text-muted">Mon-Sun, 24hr</small>
               </div>
             </div>
-            <div className="col-md-4 text-center mb-4">
-              <div className="bg-light rounded p-4">
-                <h4 className="text-success">📧 Email Us</h4>
-                <p className="mb-0">2003dileepmeena@gmail.com</p>
+            <div className="col-md-4">
+              <div className="bg-light rounded p-4 text-center h-100">
+                <h4 className="text-success mb-3">📧 Email Us</h4>
+                <p className="mb-1 fw-semibold">2003dileepmeena@gmail.com</p>
                 <small className="text-muted">24/7 Support</small>
               </div>
             </div>
-            <div className="col-md-4 text-center mb-4">
-              <div className="bg-light rounded p-4">
-                <h4 className="text-warning">📍 Visit Us</h4>
-                <p className="mb-0">Chennai, Tamil Nadu</p>
-                <small className="text-muted">By appointment only</small>
+            <div className="col-md-4">
+              <div className="bg-light rounded p-4 text-center h-100">
+                <h4 className="text-warning mb-3">📍 Visit Us</h4>
+                <p className="mb-1 fw-semibold">Neelankari, Chennai-600 115</p>
+                <small className="text-muted">Tamil Nadu, India</small>
               </div>
             </div>
           </div>
@@ -486,102 +511,51 @@ function App() {
   const Footer = () => (
     <footer className="bg-dark text-white mt-auto">
       <div className="container py-5">
-        <div className="row">
-          <div className="col-lg-4 mb-4">
-            <h5 className="fw-bold mb-3">🏓 PicklePro India</h5>
-            <p className="text-light">
+        <div className="row justify-content-center">
+          <div className="col-lg-6 col-md-8 mb-4 text-center">
+            <h5 className="fw-bold mb-3"> PicklePro India</h5>
+            <p className="text-light mb-4">
               India's leading manufacturer of premium pickleball equipment. 
               Made in India for Indian playing conditions.
             </p>
-            <div className="d-flex gap-2">
-              <button className="btn btn-outline-light btn-sm">Facebook</button>
-              <button className="btn btn-outline-light btn-sm">Instagram</button>
-              <button className="btn btn-outline-light btn-sm">Twitter</button>
-            </div>
           </div>
-          
-          <div className="col-lg-2 col-md-6 mb-4">
+        </div>
+        
+        <div className="row justify-content-center">
+          <div className="col-lg-4 col-md-6 mb-4 text-center">
             <h6 className="fw-bold mb-3">Products</h6>
-            <ul className="list-unstyled">
-              <li className="mb-2">
-                <button className="btn btn-link text-light text-decoration-none p-0 border-0" 
-                        onClick={() => setCurrentPage('products')}>
-                  Single Balls
-                </button>
-              </li>
-              <li className="mb-2">
-                <button className="btn btn-link text-light text-decoration-none p-0 border-0"
-                        onClick={() => setCurrentPage('products')}>
-                  6-Pack
-                </button>
-              </li>
-              <li className="mb-2">
-                <button className="btn btn-link text-light text-decoration-none p-0 border-0"
-                        onClick={() => setCurrentPage('products')}>
-                  Bulk Orders
-                </button>
-              </li>
-              <li className="mb-2">
-                <button className="btn btn-link text-light text-decoration-none p-0 border-0"
-                        onClick={() => setCurrentPage('products')}>
-                  Accessories
-                </button>
-              </li>
-            </ul>
-          </div>
-          
-          <div className="col-lg-2 col-md-6 mb-4">
-            <h6 className="fw-bold mb-3">Support</h6>
-            <ul className="list-unstyled">
-              <li className="mb-2">
-                <button className="btn btn-link text-light text-decoration-none p-0 border-0"
-                        onClick={() => setCurrentPage('contact')}>
-                  Contact Us
-                </button>
-              </li>
-              <li className="mb-2">
-                <button className="btn btn-link text-light text-decoration-none p-0 border-0">
-                  Shipping Info
-                </button>
-              </li>
-              <li className="mb-2">
-                <button className="btn btn-link text-light text-decoration-none p-0 border-0">
-                  Returns
-                </button>
-              </li>
-              <li className="mb-2">
-                <button className="btn btn-link text-light text-decoration-none p-0 border-0">
-                  FAQ
-                </button>
-              </li>
-            </ul>
-          </div>
-          
-          <div className="col-lg-4 mb-4">
-            <h6 className="fw-bold mb-3">Newsletter</h6>
-            <p className="text-light">Stay updated with new products and pickleball tips!</p>
-            <div className="input-group">
-              <input 
-                type="email" 
-                className="form-control" 
-                placeholder="Your email address"
-              />
-              <button className="btn btn-success" type="button">Subscribe</button>
+            <div className="d-flex flex-wrap justify-content-center gap-2">
+              <button className="btn btn-link text-light text-decoration-none p-1" 
+                      onClick={() => changePage('products')}>
+                Single Balls
+              </button>
+              <span className="text-muted">|</span>
+              <button className="btn btn-link text-light text-decoration-none p-1"
+                      onClick={() => changePage('products')}>
+                6-Pack
+              </button>
+              <span className="text-muted">|</span>
+              <button className="btn btn-link text-light text-decoration-none p-1"
+                      onClick={() => changePage('products')}>
+                Bulk Orders
+              </button>
             </div>
+          </div>
+          
+          <div className="col-lg-4 col-md-6 mb-4 text-center">
+            <h6 className="fw-bold mb-3">Support</h6>
+            <button className="btn btn-link text-light text-decoration-none p-1"
+                    onClick={() => changePage('contact')}>
+              Contact Us
+            </button>
           </div>
         </div>
         
         <hr className="my-4" />
         
-        <div className="row align-items-center">
-          <div className="col-md-6">
-            <p className="mb-0">&copy; {new Date().getFullYear()} PicklePro India. All rights reserved.</p>
-          </div>
-          <div className="col-md-6 text-md-end">
-            <small>
-              Made with ❤️ in India | Privacy Policy | Terms of Service
-            </small>
-          </div>
+        <div className="text-center">
+          <p className="mb-2">&copy; {new Date().getFullYear()} PicklePro India. All rights reserved.</p>
+          <small>Made with ❤️ in India</small>
         </div>
       </div>
     </footer>
@@ -620,6 +594,21 @@ function App() {
           transform: translateY(-2px);
           transition: all 0.3s ease;
           box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        }
+
+        .navbar-toggler {
+          border: none;
+        }
+
+        .navbar-toggler:focus {
+          box-shadow: none;
+        }
+
+        @media (max-width: 991.98px) {
+          .navbar-nav {
+            text-align: center;
+            padding-top: 1rem;
+          }
         }
       `}</style>
       
